@@ -201,11 +201,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [Adafruit SHT31](https://github.com/adafruit/Adafruit_SHT31) - SHT30/31 sensor library
 - [HX711](https://github.com/bogde/HX711) - Load cell amplifier library
 
-## 📧 Contact
-
-- GitHub: [@YOUR_USERNAME](https://github.com/YOUR_USERNAME)
-- Telegram: [@YOUR_TELEGRAM]
-
----
-
 Made with ❤️ and ☕ by Rosty
