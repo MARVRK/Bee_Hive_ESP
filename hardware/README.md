@@ -1,2 +1,1 @@
-# Hardware
-BOM and schematics
+# Hardware (BOM, schematics)

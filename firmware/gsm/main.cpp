@@ -1,7 +1,22 @@
+// GSM version main
 #include <Arduino.h>
-// GSM version entry point
+
 void setup() {
     Serial.begin(115200);
     Serial.println("BEE HIVE - GSM");
+    
+    // TODO:
+    // - setupSensors()
+    // - setupSD()
+    // - setupBattery()
+    // - setupModem()
+    // - readSensors()
+    // - logToSD()
+    // - sendTelegram()
+    // - getGPS() (once per day)
+    // - goToSleep()
 }
-void loop() {}
+
+void loop() {
+    // Empty - using deep sleep
+}
