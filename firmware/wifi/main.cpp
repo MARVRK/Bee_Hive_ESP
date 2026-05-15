@@ -1,19 +1,7 @@
-/*
- * Bee Hive Monitor - WiFi Version
- */
-
 #include <Arduino.h>
-#include "../common/config.h"
-#include "../common/sensors.h"
-#include "../common/display.h"
-
+// WiFi version entry point
 void setup() {
     Serial.begin(115200);
-    Serial.println("🐝 Bee Hive - WiFi Version");
-    
-    // TODO: Initialize WiFi
+    Serial.println("BEE HIVE - WiFi");
 }
-
-void loop() {
-    // TODO: Main loop
-}
+void loop() {}
