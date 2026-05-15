@@ -1,92 +1,39 @@
-# Makefile для быстрых команд проекта IoT Weight Monitor
+.PHONY: help gsm wifi test clean
 
-.PHONY: help push commit build upload monitor clean status
-
-# Default target
 help:
-	@echo "🚀 IoT Weight Monitor - Быстрые команды"
+	@echo "🐝 Bee Hive ESP - Commands:"
 	@echo ""
-	@echo "Git команды:"
-	@echo "  make push MSG='описание'  - add + commit + push"
-	@echo "  make commit MSG='описание' - add + commit"
-	@echo "  make status                - git status"
-	@echo ""
-	@echo "PlatformIO команды:"
-	@echo "  make build                 - скомпилировать код"
-	@echo "  make upload                - загрузить на ESP32"
-	@echo "  make monitor               - открыть Serial Monitor"
-	@echo "  make clean                 - очистить build файлы"
-	@echo ""
-	@echo "Примеры:"
-	@echo "  make push MSG='feat: добавил тест SHT30'"
-	@echo "  make upload monitor"
-	@echo ""
+	@echo "  make gsm-build      - Build GSM version"
+	@echo "  make gsm-upload     - Upload GSM version"
+	@echo "  make wifi-build     - Build WiFi version"
+	@echo "  make wifi-upload    - Upload WiFi version"
+	@echo "  make test           - Upload test firmware"
+	@echo "  make clean          - Clean build files"
 
-# Git: add + commit + push одной командой
-push:
-ifndef MSG
-	@echo "❌ Укажите сообщение: make push MSG='ваше сообщение'"
-	@exit 1
-endif
-	@echo "📦 Добавляю файлы..."
-	@git add .
-	@echo "💾 Коммичу: $(MSG)"
-	@git commit -m "$(MSG)"
-	@echo "🚀 Отправляю на GitHub..."
-	@git push
-	@echo "✅ Готово!"
+gsm-build:
+	pio run -e gsm
 
-# Git: add + commit (без push)
-commit:
-ifndef MSG
-	@echo "❌ Укажите сообщение: make commit MSG='ваше сообщение'"
-	@exit 1
-endif
-	@echo "📦 Добавляю файлы..."
-	@git add .
-	@echo "💾 Коммичу: $(MSG)"
-	@git commit -m "$(MSG)"
-	@echo "✅ Закоммичено! (для отправки: git push)"
+gsm-upload:
+	pio run -e gsm -t upload
 
-# Git: статус
-status:
-	@git status
+gsm: gsm-upload
+	pio device monitor
 
-# PlatformIO: сборка
-build:
-	@echo "🔨 Компилирую..."
-	@pio run
+wifi-build:
+	pio run -e wifi
 
-# PlatformIO: загрузка на ESP32
-upload:
-	@echo "📤 Загружаю на ESP32..."
-	@pio run -t upload
+wifi-upload:
+	pio run -e wifi -t upload
 
-# PlatformIO: Serial Monitor
-monitor:
-	@echo "📺 Открываю Serial Monitor (Ctrl+C для выхода)..."
-	@pio device monitor
+wifi: wifi-upload
+	pio device monitor
 
-# PlatformIO: очистка
+test:
+	pio run -e test -t upload
+	pio device monitor
+
 clean:
-	@echo "🗑️  Очищаю build файлы..."
-	@pio run -t clean
+	pio run -t clean
 
-# Быстрая разработка: build + upload + monitor
-dev: build upload monitor
-
-# Инициализация проекта
-init:
-	@echo "🔧 Инициализация проекта..."
-	@if [ ! -f secrets.h ]; then \
-		echo "📝 Создаю secrets.h из шаблона..."; \
-		cp secrets.h.example secrets.h; \
-		echo "⚠️  Не забудьте заполнить secrets.h своими данными!"; \
-	fi
-	@if [ ! -d .git ]; then \
-		echo "🎯 Инициализирую Git..."; \
-		git init; \
-		git add .; \
-		git commit -m "Initial commit"; \
-	fi
-	@echo "✅ Проект готов!"
+monitor:
+	pio device monitor
